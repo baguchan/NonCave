@@ -90,7 +90,8 @@ public class ModNoiseRouterData {
         DensityFunction aqua_floodness = DensityFunctions.noise(p_255986_.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_FLOODEDNESS), 0.67D);
         DensityFunction aqua_spread = DensityFunctions.noise(p_255986_.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_SPREAD), 0.7142857142857143D);
         DensityFunction lava = DensityFunctions.noise(p_255986_.getOrThrow(Noises.AQUIFER_LAVA));
-
+        DensityFunction aqua_floodness2 = DensityFunctions.rangeChoice(aqua_floodness, -1, -0.8, DensityFunctions.constant(1), DensityFunctions.zero());
+        DensityFunction aqua_spread2 = DensityFunctions.rangeChoice(aqua_spread, -1, -0.8, DensityFunctions.constant(1), DensityFunctions.zero());
 
         DensityFunction densityfunction = getFunction(p_255724_, SHIFT_X);
         DensityFunction densityfunction1 = getFunction(p_255724_, SHIFT_Z);
@@ -106,11 +107,11 @@ public class ModNoiseRouterData {
         DensityFunction densityfunction11 = getFunction(p_255724_, ModDensityFunctions.SLOPED_CHEESE_NETHER);
         DensityFunction densityfunction12 = DensityFunctions.min(densityfunction11, DensityFunctions.mul(DensityFunctions.constant(5.0D), getFunction(p_255724_, ENTRANCES)));
 
-        DensityFunction densityfunction13 = DensityFunctions.rangeChoice(densityfunction11, -1000000.0D, 1.5625D, densityfunction12, slideNetherCave(cave));
+        DensityFunction densityfunction13 = DensityFunctions.rangeChoice(densityfunction11, -1000000.0D, 1.5625D, densityfunction12, cave);
 
         DensityFunction densityfunction14 = DensityFunctions.min(postProcess(slideNetherLike(p_255724_, densityfunction13, 0, 100)), getFunction(p_255724_, NOODLE));
 
-        return new NoiseRouter(aqua_barrier, aqua_floodness, aqua_spread, lava, densityfunction2, densityfunction3, getFunction(p_255724_, CONTINENTS), getFunction(p_255724_, EROSION), densityfunction9, getFunction(p_255724_, RIDGES), slideNetherLike(p_255724_, DensityFunctions.add(densityfunction10, DensityFunctions.constant(-0.703125D)).clamp(0.0D, 64.0D), 0, 100), densityfunction14, DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero());
+        return new NoiseRouter(aqua_barrier, aqua_floodness2, aqua_spread2, lava, densityfunction2, densityfunction3, getFunction(p_255724_, CONTINENTS), getFunction(p_255724_, EROSION), densityfunction9, getFunction(p_255724_, RIDGES), slideNetherLike(p_255724_, DensityFunctions.add(densityfunction10, DensityFunctions.constant(-0.703125D)).clamp(0.0D, 64.0D), 0, 100), densityfunction14, DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero());
     }
 
     protected static NoiseRouter nether(HolderGetter<DensityFunction> p_256256_, HolderGetter<NormalNoise.NoiseParameters> p_256169_) {
@@ -127,10 +128,6 @@ public class ModNoiseRouterData {
 
     private static DensityFunction slideCave(DensityFunction p_224491_) {
         return slide(p_224491_, -64, 64, 24, 0, 0.9375, -8, 24, 2.5);
-    }
-
-    private static DensityFunction slideNetherCave(DensityFunction p_224491_) {
-        return slide(p_224491_, 0, 50, 24, 0, 0.9375, -8, 24, 2.5);
     }
 
     private static DensityFunction slideCaveUpper(DensityFunction p_224491_) {
