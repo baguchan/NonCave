@@ -28,62 +28,59 @@
     "depth": "minecraft:overworld/depth",
     "erosion": "minecraft:overworld/erosion",
     "final_density": {
-      "type": "minecraft:min",
-      "argument1": {
-        "type": "minecraft:squeeze",
-        "argument": {
-          "type": "minecraft:mul",
-          "argument1": 0.64,
-          "argument2": {
-            "type": "minecraft:interpolated",
+      "type": "minecraft:squeeze",
+      "argument": {
+        "type": "minecraft:mul",
+        "argument1": 0.64,
+        "argument2": {
+          "type": "minecraft:interpolated",
+          "argument": {
+            "type": "minecraft:blend_density",
             "argument": {
-              "type": "minecraft:blend_density",
-              "argument": {
-                "type": "minecraft:add",
-                "argument1": 2.5,
+              "type": "minecraft:add",
+              "argument1": 2.5,
+              "argument2": {
+                "type": "minecraft:mul",
+                "argument1": {
+                  "type": "minecraft:y_clamped_gradient",
+                  "from_value": 0.0,
+                  "from_y": -8,
+                  "to_value": 1.0,
+                  "to_y": 24
+                },
                 "argument2": {
-                  "type": "minecraft:mul",
-                  "argument1": {
-                    "type": "minecraft:y_clamped_gradient",
-                    "from_value": 0.0,
-                    "from_y": -8,
-                    "to_value": 1.0,
-                    "to_y": 24
-                  },
+                  "type": "minecraft:add",
+                  "argument1": -2.5,
                   "argument2": {
                     "type": "minecraft:add",
-                    "argument1": -2.5,
+                    "argument1": 0.9375,
                     "argument2": {
-                      "type": "minecraft:add",
-                      "argument1": 0.9375,
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:y_clamped_gradient",
+                        "from_value": 1.0,
+                        "from_y": 76,
+                        "to_value": 0.0,
+                        "to_y": 100
+                      },
                       "argument2": {
-                        "type": "minecraft:mul",
-                        "argument1": {
-                          "type": "minecraft:y_clamped_gradient",
-                          "from_value": 1.0,
-                          "from_y": 76,
-                          "to_value": 0.0,
-                          "to_y": 100
-                        },
+                        "type": "minecraft:add",
+                        "argument1": -0.9375,
                         "argument2": {
-                          "type": "minecraft:add",
-                          "argument1": -0.9375,
-                          "argument2": {
-                            "type": "minecraft:range_choice",
-                            "input": "noncave:nether/sloped_cheese",
-                            "max_exclusive": 1.5625,
-                            "min_inclusive": -1000000.0,
-                            "when_in_range": {
-                              "type": "minecraft:min",
-                              "argument1": "noncave:nether/sloped_cheese",
-                              "argument2": {
-                                "type": "minecraft:mul",
-                                "argument1": 5.0,
-                                "argument2": "minecraft:overworld/caves/entrances"
-                              }
-                            },
-                            "when_out_of_range": "noncave:nether/underground"
-                          }
+                          "type": "minecraft:range_choice",
+                          "input": "noncave:nether/sloped_cheese",
+                          "max_exclusive": 1.5625,
+                          "min_inclusive": -1000000.0,
+                          "when_in_range": {
+                            "type": "minecraft:min",
+                            "argument1": "noncave:nether/sloped_cheese",
+                            "argument2": {
+                              "type": "minecraft:mul",
+                              "argument1": 5.0,
+                              "argument2": "minecraft:overworld/caves/entrances"
+                            }
+                          },
+                          "when_out_of_range": "noncave:nether/underground"
                         }
                       }
                     }
@@ -93,8 +90,7 @@
             }
           }
         }
-      },
-      "argument2": "minecraft:overworld/caves/noodle"
+      }
     },
     "fluid_level_floodedness": {
       "type": "minecraft:range_choice",
