@@ -20,7 +20,7 @@ public class ModDimensionSettings {
     public static final ResourceKey<NoiseGeneratorSettings> NETHER = ResourceKey.create(Registries.NOISE_SETTINGS, new ResourceLocation("nether"));
 
     public static NoiseGeneratorSettings moddedNoise(BootstapContext<NoiseGeneratorSettings> p_256365_) {
-        return new NoiseGeneratorSettings(OVERWORLD_NOISE_SETTINGS, Blocks.STONE.defaultBlockState(), Blocks.WATER.defaultBlockState(), ModNoiseRouterData.moddedCave(p_256365_.lookup(Registries.DENSITY_FUNCTION), p_256365_.lookup(Registries.NOISE)), SurfaceRuleData.overworld(), (new OverworldBiomeBuilder()).spawnTarget(), 63, false, true, true, false);
+        return new NoiseGeneratorSettings(OVERWORLD_NOISE_SETTINGS, Blocks.STONE.defaultBlockState(), Blocks.WATER.defaultBlockState(), ModNoiseRouterData.moddedCave(p_256365_.lookup(Registries.DENSITY_FUNCTION), p_256365_.lookup(Registries.NOISE)), ModSurfaceRuleData.overworld(), (new OverworldBiomeBuilder()).spawnTarget(), 63, false, true, true, false);
     }
 
     public static void bootstrapNoise(BootstapContext<NoiseGeneratorSettings> p_256365_) {
