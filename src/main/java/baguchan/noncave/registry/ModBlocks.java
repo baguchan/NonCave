@@ -18,11 +18,11 @@ import java.util.function.Supplier;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, NonCave.MODID);
 
-    public static final RegistryObject<Block> MIDSHALE = BLOCKS.register("midshale", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).requiresCorrectToolForDrops().strength(2.0F, 6.0F).sound(SoundType.DRIPSTONE_BLOCK)));
+    public static final RegistryObject<Block> MIDSHALE = register("midshale", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).requiresCorrectToolForDrops().strength(2.0F, 6.0F).sound(SoundType.DRIPSTONE_BLOCK)));
 
 
-    private static <T extends Block> Supplier<T> baseRegister(String name, Supplier<? extends T> block, Function<Supplier<T>, Supplier<? extends Item>> item) {
-        Supplier<T> register = BLOCKS.register(name, block);
+    private static <T extends Block> RegistryObject<T> baseRegister(String name, Supplier<? extends T> block, Function<Supplier<T>, Supplier<? extends Item>> item) {
+        RegistryObject<T> register = BLOCKS.register(name, block);
         Supplier<? extends Item> itemSupplier = item.apply(register);
         ModItems.ITEMS.register(name, itemSupplier);
         return register;
@@ -33,8 +33,8 @@ public class ModBlocks {
         return register;
     }
 
-    private static <B extends Block> Supplier<B> register(String name, Supplier<? extends Block> block) {
-        return (Supplier<B>) baseRegister(name, block, (object) -> ModBlocks.registerBlockItem(object));
+    private static <B extends Block> RegistryObject<B> register(String name, Supplier<? extends Block> block) {
+        return (RegistryObject<B>) baseRegister(name, block, (object) -> ModBlocks.registerBlockItem(object));
     }
 
     private static <T extends Block> Supplier<BlockItem> registerBlockItem(final Supplier<T> block) {

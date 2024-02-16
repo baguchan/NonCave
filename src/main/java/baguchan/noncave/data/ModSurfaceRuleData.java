@@ -92,11 +92,12 @@ public class ModSurfaceRuleData {
             builder.add(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("bedrock_floor", VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(5)), BEDROCK));
         }
 
+        SurfaceRules.RuleSource surfacerules$rulesource20 = SurfaceRules.ifTrue(SurfaceRules.verticalGradient("noncave:midshale", VerticalAnchor.absolute(8), VerticalAnchor.absolute(20)), MIDSHALE);
+
         SurfaceRules.RuleSource surfacerules$rulesource9 = SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), surfacerules$rulesource8);
         builder.add(p_198381_ ? surfacerules$rulesource9 : surfacerules$rulesource8);
 
-        builder.add(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("noncave:midshale", VerticalAnchor.absolute(8), VerticalAnchor.absolute(20)), MIDSHALE));
-        builder.add(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("deepslate", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)), DEEPSLATE));
+        builder.add(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("deepslate", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)), DEEPSLATE), surfacerules$rulesource20);
         return SurfaceRules.sequence(builder.build().toArray((p_198379_) -> {
             return new SurfaceRules.RuleSource[p_198379_];
         }));

@@ -1,5 +1,7 @@
 {
-  "": {
-    "model": "noncave:block/midshale"
+  "variants": {
+    "": {
+      "model": "noncave:block/midshale"
+    }
   }
 }
