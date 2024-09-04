@@ -30,11 +30,11 @@ public class ModNoiseRouterData {
     private static final ResourceKey<DensityFunction> BASE_3D_NOISE_NETHER = createKey("nether/base_3d_noise");
 
     private static ResourceKey<DensityFunction> createKey(String p_209537_) {
-        return ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(p_209537_));
+        return ResourceKey.create(Registries.DENSITY_FUNCTION, ResourceLocation.parse(p_209537_));
     }
 
     private static ResourceKey<DensityFunction> createKey(String modid, String p_209537_) {
-        return ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(modid, p_209537_));
+        return ResourceKey.create(Registries.DENSITY_FUNCTION, ResourceLocation.fromNamespaceAndPath(modid, p_209537_));
     }
 
     public static DensityFunction underground(HolderGetter<DensityFunction> p_256548_, HolderGetter<NormalNoise.NoiseParameters> p_256236_, DensityFunction p_256658_, float offset) {

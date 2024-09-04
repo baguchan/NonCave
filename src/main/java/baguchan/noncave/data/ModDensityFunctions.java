@@ -4,7 +4,7 @@ import baguchan.noncave.NonCave;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.TerrainProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -35,14 +35,14 @@ public class ModDensityFunctions {
     public static final ResourceKey<DensityFunction> UNDERGROUND_NETHER = createKey("nether/underground");
 
     private static ResourceKey<DensityFunction> createVannilaKey(String name) {
-        return ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(name));
+        return ResourceKey.create(Registries.DENSITY_FUNCTION, ResourceLocation.withDefaultNamespace(name));
     }
 
     private static ResourceKey<DensityFunction> createKey(String name) {
-        return ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(NonCave.MODID, name));
+        return ResourceKey.create(Registries.DENSITY_FUNCTION, ResourceLocation.fromNamespaceAndPath(NonCave.MODID, name));
     }
 
-    public static void bootstrap(BootstapContext<DensityFunction> context) {
+    public static void bootstrap(BootstrapContext<DensityFunction> context) {
         HolderGetter<NormalNoise.NoiseParameters> noiseHolderGetter = context.lookup(Registries.NOISE);
         HolderGetter<DensityFunction> density = context.lookup(Registries.DENSITY_FUNCTION);
         DensityFunction densityfunction = getFunction(density, SHIFT_X);
@@ -71,7 +71,7 @@ public class ModDensityFunctions {
         return DensityFunctions.cacheOnce(DensityFunctions.mul($$6, $$5.cube()));
     }
 
-    private static void registerBiomeNoises(BootstapContext<NormalNoise.NoiseParameters> p_256503_, int p_236479_, ResourceKey<NormalNoise.NoiseParameters> p_236482_, ResourceKey<NormalNoise.NoiseParameters> p_236483_) {
+    private static void registerBiomeNoises(BootstrapContext<NormalNoise.NoiseParameters> p_256503_, int p_236479_, ResourceKey<NormalNoise.NoiseParameters> p_236482_, ResourceKey<NormalNoise.NoiseParameters> p_236483_) {
         register(p_256503_, p_236482_, -9 + p_236479_, 1.0D, 1.0D, 2.0D, 2.0D, 2.0D, 1.0D, 1.0D, 1.0D, 1.0D);
         register(p_256503_, p_236483_, -9 + p_236479_, 1.0D, 1.0D, 0.0D, 1.0D, 1.0D);
     }
@@ -81,11 +81,11 @@ public class ModDensityFunctions {
         return DensityFunctions.flatCache(DensityFunctions.cache2d(densityfunction));
     }
 
-    private static DensityFunction registerAndWrap(BootstapContext<DensityFunction> p_256149_, ResourceKey<DensityFunction> p_255905_, DensityFunction p_255856_) {
+    private static DensityFunction registerAndWrap(BootstrapContext<DensityFunction> p_256149_, ResourceKey<DensityFunction> p_255905_, DensityFunction p_255856_) {
         return new DensityFunctions.HolderHolder(p_256149_.register(p_255905_, p_255856_));
     }
 
-    private static void registerTerrainNoises(BootstapContext<DensityFunction> p_256336_, HolderGetter<DensityFunction> p_256393_, DensityFunction p_224476_, Holder<DensityFunction> p_224477_, Holder<DensityFunction> p_224478_, ResourceKey<DensityFunction> p_224479_, ResourceKey<DensityFunction> p_224480_, ResourceKey<DensityFunction> p_224481_, ResourceKey<DensityFunction> p_224482_, ResourceKey<DensityFunction> p_224483_, boolean p_224484_) {
+    private static void registerTerrainNoises(BootstrapContext<DensityFunction> p_256336_, HolderGetter<DensityFunction> p_256393_, DensityFunction p_224476_, Holder<DensityFunction> p_224477_, Holder<DensityFunction> p_224478_, ResourceKey<DensityFunction> p_224479_, ResourceKey<DensityFunction> p_224480_, ResourceKey<DensityFunction> p_224481_, ResourceKey<DensityFunction> p_224482_, ResourceKey<DensityFunction> p_224483_, boolean p_224484_) {
         DensityFunctions.Spline.Coordinate densityfunctions$spline$coordinate = new DensityFunctions.Spline.Coordinate(p_224477_);
         DensityFunctions.Spline.Coordinate densityfunctions$spline$coordinate1 = new DensityFunctions.Spline.Coordinate(p_224478_);
         DensityFunctions.Spline.Coordinate densityfunctions$spline$coordinate2 = new DensityFunctions.Spline.Coordinate(p_256393_.getOrThrow(RIDGES));
@@ -104,7 +104,7 @@ public class ModDensityFunctions {
         return DensityFunctions.mul(DensityFunctions.constant(4.0D), densityfunction.quarterNegative());
     }
 
-    public static void register(BootstapContext<NormalNoise.NoiseParameters> ctx, ResourceKey<NormalNoise.NoiseParameters> key, int firstOctave, double firstAmplitude, double... amplitudes) {
+    public static void register(BootstrapContext<NormalNoise.NoiseParameters> ctx, ResourceKey<NormalNoise.NoiseParameters> key, int firstOctave, double firstAmplitude, double... amplitudes) {
         ctx.register(key, new NormalNoise.NoiseParameters(firstOctave, firstAmplitude, amplitudes));
     }
 
