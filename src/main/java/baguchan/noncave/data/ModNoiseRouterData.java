@@ -46,7 +46,7 @@ public class ModNoiseRouterData {
         DensityFunction densityfunction5 = DensityFunctions.add(DensityFunctions.add(DensityFunctions.constant(0.27), densityfunction4).clamp(-1.0, 1.0), DensityFunctions.add(DensityFunctions.constant(1.5), DensityFunctions.mul(DensityFunctions.constant(-0.64), p_256658_)).clamp(-0.5, 0.5));
         DensityFunction densityfunction6 = DensityFunctions.add(densityfunction3, densityfunction5);
         DensityFunction densityfunction7 = DensityFunctions.min(DensityFunctions.min(densityfunction6, getFunction(p_256548_, ENTRANCES)), DensityFunctions.add(densityfunction, densityfunction1));
-        DensityFunction densityfunction8 = getFunction(p_256548_, PILLARS);
+        DensityFunction densityfunction8 = getFunction(p_256548_, ModDensityFunctions.PILLARS);
         DensityFunction densityfunction9 = DensityFunctions.rangeChoice(densityfunction8, -1000000.0, offset, DensityFunctions.constant(-1000000.0), densityfunction8);
         return DensityFunctions.max(densityfunction7, densityfunction9);
     }
@@ -57,10 +57,10 @@ public class ModNoiseRouterData {
     }
 
     public static NoiseRouter moddedCave(HolderGetter<DensityFunction> p_255681_, HolderGetter<NormalNoise.NoiseParameters> p_256005_) {
-        DensityFunction densityfunction = DensityFunctions.noise(p_256005_.getOrThrow(Noises.AQUIFER_BARRIER), 0.5D);
-        DensityFunction densityfunction1 = DensityFunctions.noise(p_256005_.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_FLOODEDNESS), 0.67D);
-        DensityFunction densityfunction2 = DensityFunctions.noise(p_256005_.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_SPREAD), 0.7142857142857143D);
-        DensityFunction densityfunction3 = DensityFunctions.noise(p_256005_.getOrThrow(Noises.AQUIFER_LAVA));
+        DensityFunction densityfunction = DensityFunctions.zero();
+        DensityFunction densityfunction1 = DensityFunctions.zero();
+        DensityFunction densityfunction2 = DensityFunctions.zero();
+        DensityFunction densityfunction3 = DensityFunctions.zero();
         DensityFunction densityfunction4 = getFunction(p_255681_, SHIFT_X);
         DensityFunction densityfunction5 = getFunction(p_255681_, SHIFT_Z);
         DensityFunction densityfunction6 = DensityFunctions.shiftedNoise2d(densityfunction4, densityfunction5, 0.25D, p_256005_.getOrThrow(Noises.TEMPERATURE));
@@ -74,7 +74,7 @@ public class ModNoiseRouterData {
 
         DensityFunction cave = getFunction(p_255681_, ModDensityFunctions.UNDERGROUND);
 
-        DensityFunction densityfunction13 = DensityFunctions.rangeChoice(densityfunction11, -1000000.0D, 1.5625D, densityfunction12, DensityFunctions.min(slideCaveUpper(cave), slideCave(cave)));
+        DensityFunction densityfunction13 = DensityFunctions.rangeChoice(densityfunction11, -1000000.0D, 1.5625D, densityfunction12, cave);
 
         DensityFunction densityfunction14 = DensityFunctions.min(postProcess(slideOverworld(densityfunction13)), getFunction(p_255681_, NOODLE));
         DensityFunction densityfunction15 = getFunction(p_255681_, Y);
@@ -107,7 +107,7 @@ public class ModNoiseRouterData {
         DensityFunction densityfunction11 = getFunction(p_255724_, ModDensityFunctions.SLOPED_CHEESE_NETHER);
         DensityFunction densityfunction12 = DensityFunctions.min(densityfunction11, DensityFunctions.mul(DensityFunctions.constant(5.0D), getFunction(p_255724_, ENTRANCES)));
 
-        DensityFunction densityfunction13 = DensityFunctions.rangeChoice(densityfunction11, -1000000.0D, 1.5625D, densityfunction12, cave);
+        DensityFunction densityfunction13 = DensityFunctions.min(densityfunction12, cave);
         DensityFunction densityfunction14 = postProcess(slideNetherLike(p_255724_, densityfunction13, 0, 100));
 
         return new NoiseRouter(aqua_barrier, aqua_floodness2, aqua_spread2, lava, densityfunction2, densityfunction3, getFunction(p_255724_, CONTINENTS), getFunction(p_255724_, EROSION), densityfunction9, getFunction(p_255724_, RIDGES), slideNetherLike(p_255724_, DensityFunctions.add(densityfunction10, DensityFunctions.constant(-0.703125D)).clamp(0.0D, 64.0D), 0, 100), densityfunction14, DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero());
@@ -126,7 +126,7 @@ public class ModNoiseRouterData {
     }
 
     private static DensityFunction slideCave(DensityFunction p_224491_) {
-        return slide(p_224491_, -64, 64, 24, 0, 0.9375, -8, 24, 2.5);
+        return slide(p_224491_, -64, 32, 32, 16, 0.07, -16, 32, 2.5);
     }
 
     private static DensityFunction slideCaveUpper(DensityFunction p_224491_) {

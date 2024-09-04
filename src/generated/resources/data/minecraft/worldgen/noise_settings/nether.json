@@ -67,11 +67,8 @@
                         "type": "minecraft:add",
                         "argument1": -0.9375,
                         "argument2": {
-                          "type": "minecraft:range_choice",
-                          "input": "noncave:nether/sloped_cheese",
-                          "max_exclusive": 1.5625,
-                          "min_inclusive": -1000000.0,
-                          "when_in_range": {
+                          "type": "minecraft:min",
+                          "argument1": {
                             "type": "minecraft:min",
                             "argument1": "noncave:nether/sloped_cheese",
                             "argument2": {
@@ -80,7 +77,7 @@
                               "argument2": "minecraft:overworld/caves/entrances"
                             }
                           },
-                          "when_out_of_range": "noncave:nether/underground"
+                          "argument2": "noncave:nether/underground"
                         }
                       }
                     }

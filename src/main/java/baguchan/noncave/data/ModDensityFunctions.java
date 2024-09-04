@@ -29,6 +29,8 @@ public class ModDensityFunctions {
     public static final ResourceKey<DensityFunction> JAGGEDNESS = createVannilaKey("overworld/jaggedness");
     public static final ResourceKey<DensityFunction> DEPTH = createVannilaKey("overworld/depth");
     public static final ResourceKey<DensityFunction> SLOPED_CHEESE_NETHER = createKey("nether/sloped_cheese");
+
+    public static final ResourceKey<DensityFunction> PILLARS = createKey("overworld/pillars");
     public static final ResourceKey<DensityFunction> UNDERGROUND = createKey("overworld/underground");
     public static final ResourceKey<DensityFunction> UNDERGROUND_NETHER = createKey("nether/underground");
 
@@ -51,11 +53,23 @@ public class ModDensityFunctions {
 
         DensityFunction densityfunction3 = DensityFunctions.noise(noiseHolderGetter.getOrThrow(Noises.JAGGED), 1500.0D, 0.0D);
         registerTerrainNoises(context, density, densityfunction3, holder, holder1, OFFSET, FACTOR, JAGGEDNESS, DEPTH, SLOPED_CHEESE_NETHER, false);
+        context.register(PILLARS, pillars(noiseHolderGetter));
 
         context.register(UNDERGROUND, ModNoiseRouterData.underground(density, noiseHolderGetter, getFunction(density, ModNoiseRouterData.SLOPED_CHEESE), 0.03F));
-        context.register(UNDERGROUND_NETHER, ModNoiseRouterData.underground(density, noiseHolderGetter, getFunction(density, SLOPED_CHEESE_NETHER), -0.03F));
-    }
+        context.register(UNDERGROUND_NETHER, ModNoiseRouterData.underground(density, noiseHolderGetter, getFunction(density, SLOPED_CHEESE_NETHER), 0.03F));
 
+     }
+
+
+    private static DensityFunction pillars(HolderGetter<NormalNoise.NoiseParameters> p_255985_) {
+        double $$1 = 25.0;
+        double $$2 = 0.3;
+        DensityFunction $$3 = DensityFunctions.noise(p_255985_.getOrThrow(Noises.PILLAR), 13.0, 0.3);
+        DensityFunction $$4 = DensityFunctions.mappedNoise(p_255985_.getOrThrow(Noises.PILLAR_RARENESS), -0.5, -3.0);
+        DensityFunction $$5 = DensityFunctions.mappedNoise(p_255985_.getOrThrow(Noises.PILLAR_THICKNESS), 0.5, 2.0);
+        DensityFunction $$6 = DensityFunctions.add(DensityFunctions.mul($$3, DensityFunctions.constant(2.0)), $$4);
+        return DensityFunctions.cacheOnce(DensityFunctions.mul($$6, $$5.cube()));
+    }
 
     private static void registerBiomeNoises(BootstapContext<NormalNoise.NoiseParameters> p_256503_, int p_236479_, ResourceKey<NormalNoise.NoiseParameters> p_236482_, ResourceKey<NormalNoise.NoiseParameters> p_236483_) {
         register(p_256503_, p_236482_, -9 + p_236479_, 1.0D, 1.0D, 2.0D, 2.0D, 2.0D, 1.0D, 1.0D, 1.0D, 1.0D);
